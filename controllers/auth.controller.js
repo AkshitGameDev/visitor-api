@@ -6,14 +6,18 @@ const signup = async (req, res, next) => {
     const data = signupSchema.parse(req.body);
     const user = await registerUser(data);
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "User created",
       data: user
     });
   } catch (error) {
-    next(error);
-  }
+  console.log("SIGNUP ERROR:", error);
+  return res.status(500).json({
+    success: false,
+    message: error.message
+  });
+}
 };
 
 const login = async (req, res, next) => {
@@ -21,21 +25,29 @@ const login = async (req, res, next) => {
     const data = loginSchema.parse(req.body);
     const result = await loginUser(data);
 
-    res.json({
+    return res.status(200).json({
       success: true,
       message: "Login successful",
       data: result
     });
   } catch (error) {
-    next(error);
-  }
+  console.log("SIGNUP ERROR:", error);
+  return res.status(500).json({
+    success: false,
+    message: error.message
+  });
+}
 };
 
 const getMe = async (req, res) => {
-  res.json({
+  return res.status(200).json({
     success: true,
     data: req.user
   });
 };
 
-module.exports = { signup, login, getMe };
+module.exports = {
+  signup,
+  login,
+  getMe
+};
