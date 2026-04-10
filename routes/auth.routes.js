@@ -1,16 +1,11 @@
-const { ZodError } = require("zod");
+const express = require("express");
+const { signup, login, getMe } = require("../controllers/auth.controller");
+const authMiddleware = require("../middleware/auth.middleware");
 
-const errorMiddleware = (err, req, res, next) => {
-  if (err instanceof ZodError) {
-    return res.status(400).json({
-      message: "Validation error",
-      errors: err.errors
-    });
-  }
+const router = express.Router();
 
-  res.status(err.statusCode || 500).json({
-    message: err.message || "Server error"
-  });
-};
+router.post("/signup", signup);
+router.post("/login", login);
+router.get("/me", authMiddleware, getMe);
 
-module.exports = errorMiddleware;
+module.exports = router;
