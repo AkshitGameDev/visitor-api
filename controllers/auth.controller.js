@@ -12,8 +12,12 @@ const signup = async (req, res, next) => {
       data: user
     });
   } catch (error) {
-    return next(error);
-  }
+  console.log("SIGNUP ERROR:", error);
+  return res.status(500).json({
+    success: false,
+    message: error.message
+  });
+}
 };
 
 const login = async (req, res, next) => {
@@ -27,8 +31,12 @@ const login = async (req, res, next) => {
       data: result
     });
   } catch (error) {
-    return next(error);
-  }
+  console.log("SIGNUP ERROR:", error);
+  return res.status(500).json({
+    success: false,
+    message: error.message
+  });
+}
 };
 
 const getMe = async (req, res) => {

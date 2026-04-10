@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
   {
@@ -26,21 +27,19 @@ const userSchema = new mongoose.Schema(
       minlength: 8
     }
   },
-  { timestamps: true }
+  {
+    timestamps: true
+  }
 );
 
-// 🔐 hash password
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
-  const bcrypt = require("bcryptjs");
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
-// 🔑 compare password
 userSchema.methods.comparePassword = async function (enteredPassword) {
-  const bcrypt = require("bcryptjs");
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
