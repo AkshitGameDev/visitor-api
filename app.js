@@ -14,12 +14,20 @@ app.get("/", (req, res) => {
   res.json({ message: "Visitor API is running" });
 });
 
-app.get("/health", (req, res) => {
+app.get("/healthEx", (req, res) => {
   res.status(200).json({
     status: "ok",
     message: "Visitor API is healthy",
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
+  });
+});
+
+
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    message: "Visitor API is healthy",
   });
 });
 
