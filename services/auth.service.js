@@ -19,11 +19,21 @@ const registerUser = async ({ name, userName, email, password }) => {
     password
   });
 
+  // 🔥 create token SAME as login
+  const token = jwt.sign(
+    { userId: user._id },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
+
   return {
-    id: user._id,
-    name: user.name,
-    userName: user.userName,
-    email: user.email
+    token,
+    user: {
+      id: user._id,
+      name: user.name,
+      userName: user.userName,
+      email: user.email
+    }
   };
 };
 
