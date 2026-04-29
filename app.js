@@ -3,6 +3,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const authRoutes = require("./routes/auth.routes");
 const errorMiddleware = require("./middleware/error.middleware");
+const visitorRoutes = require("./routes/visitor.routes");
 
 const app = express();
 
@@ -34,5 +35,7 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 
 app.use(errorMiddleware);
+
+app.use("/api/visitors", visitorRoutes);
 
 module.exports = app;
